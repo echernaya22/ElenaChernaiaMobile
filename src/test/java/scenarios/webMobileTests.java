@@ -2,6 +2,7 @@ package scenarios;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import setup.BaseTest;
 import java.util.List;
@@ -21,10 +22,18 @@ public class webMobileTests extends BaseTest {
                 wd -> ((JavascriptExecutor) wd).executeScript("return document.readyState").equals("complete")
         );
 
+        String platformName = (String) getDriver().getCapabilities().getCapability("platformName");
+
         getPo().getWelement("inputSearchField").sendKeys(getValue("searchWord"));
-        getPo().getWelement("inputSearchField").sendKeys(Keys.ENTER);
+        if (platformName.equals("Android")) {
+            getPo().getWelement("inputSearchField").sendKeys(Keys.ENTER);
+        } else {
+            getPo().getWelement("inputSearchField").submit();
+        }
 
         List<WebElement> resultedList = getPo().getListWelements("searchResultList");
+
+        Assert.assertNotNull(resultedList);
 
         for (int i = 0; i < resultedList.size() / 2; i++) {
             assertThat(resultedList.get(i).getText().toUpperCase(),

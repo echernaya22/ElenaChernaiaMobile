@@ -21,8 +21,15 @@ public class nativeMobileTests extends BaseTest {
         getPo().getWelement("loginPasswordField").sendKeys(getValue("password"));
         getPo().getWelement("signInButton").click();
 
-        Assert.assertEquals(getPo().getWelement("budgetTitle").getText(), getValue("budgetTitle"));
-        System.out.println("Simplest Android native test done");
+        String platformName = (String) getDriver().getCapabilities().getCapability("platformName");
+
+        if (platformName.equals("Android")) {
+            Assert.assertEquals(getPo().getWelement("budgetTitle").getText(), getValue("budgetTitleAndroid"));
+        } else {
+            Assert.assertEquals(getPo().getWelement("budgetTitle").getText(), getValue("budgetTitleIos"));
+        }
+
+        //System.out.println("Simplest Android native test done");
 
     }
 

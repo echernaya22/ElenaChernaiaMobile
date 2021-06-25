@@ -11,7 +11,8 @@ public class WebPageObject  {
 
     @FindBy(xpath = "//input[@name='q']")
     WebElement inputSearchField;
-    @FindBy(xpath = "//*[@id='rso']//div[@role='heading'][@aria-level='3']")
+    //@FindBy(xpath = "//*[@id='rso']//div[@role='heading'][@aria-level='3']")
+    @FindBy(xpath = "//div[@id='rso']/div")
     List<WebElement> searchResultList;
 
     public WebPageObject(AppiumDriver appiumDriver) {
