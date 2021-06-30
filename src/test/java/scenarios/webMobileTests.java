@@ -33,12 +33,15 @@ public class webMobileTests extends BaseTest {
 
         List<WebElement> resultedList = getPo().getListWelements("searchResultList");
 
-        Assert.assertNotNull(resultedList);
+        int wordCounter = 0;
 
-        for (int i = 0; i < resultedList.size() / 2; i++) {
-            assertThat(resultedList.get(i).getText().toUpperCase(),
-                    containsString(getValue("searchWord")));
+        for (WebElement webElement : resultedList) {
+            if (webElement.getText().toUpperCase().contains(getValue("searchWord"))) {
+                wordCounter++;
+            }
         }
+
+        Assert.assertTrue(wordCounter > 0);
 
         // Log that test finished
         System.out.println("Site opening done");
